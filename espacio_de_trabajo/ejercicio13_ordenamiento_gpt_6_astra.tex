@@ -1,0 +1,107 @@
+\ej{13}{Ordenar panqueques de tamaños 1 o 2 mediante inversiones}
+
+\textbf{Idea.} Dividimos el arreglo en dos mitades y las ordenamos recursivamente. Cada mitad ordenada contiene unos seguidos de doses; para combinarlas, invertimos el bloque formado por los doses de la izquierda y los unos de la derecha:
+\[
+1^\alpha\,\underbrace{2^\beta\,1^\gamma}_{\text{invertir}}\,2^\delta
+\quad\longrightarrow\quad
+1^\alpha\,1^\gamma\,2^\beta\,2^\delta.
+\]
+Aquí $x^k$ representa $k$ repeticiones del tamaño $x$, y $x^0$ representa un bloque vacío.
+
+\textbf{Algoritmo.} Recibe $P[1..n]$, con $P_i\in\{1,2\}$; modifica $P$ y emite, en orden de ejecución, los pares que deben invertirse. La operación $\operatorname{Flip}(P,i,j)$ invierte exactamente $P[i..j]$, toma tiempo constante y consume energía $j-i$.
+
+\begin{verbatim}
+Ordenar(P, l, r):
+ 1. Si l >= r: retornar
+ 2. m <- floor((l+r)/2)
+ 3. Ordenar(P, l, m)
+ 4. Ordenar(P, m+1, r)
+ 5. i <- l
+ 6. Mientras i <= m y P[i] = 1:
+ 7.     i <- i+1
+ 8. j <- r
+ 9. Mientras j >= m+1 y P[j] = 2:
+10.     j <- j-1
+11. Si i <= m y j >= m+1:
+12.     emitir (i,j)
+13.     Flip(P, i, j)
+
+Llamada inicial: Ordenar(P, 1, n).
+\end{verbatim}
+
+Las condiciones de los ciclos se evalúan de izquierda a derecha: solo se consulta $P[i]$ o $P[j]$ si el índice está dentro de su mitad.
+
+\textbf{Correctitud por inducción sobre el tamaño $s=r-l+1$.}
+
+\begin{enumerate}
+\item \textbf{Caso base: $s\le1$.} El segmento vacío o de un elemento está ordenado. El algoritmo retorna sin modificarlo, por lo que conserva sus elementos.
+
+\item \textbf{Hipótesis inductiva.} Toda llamada sobre un segmento de tamaño menor que $s$ lo ordena y conserva sus elementos.
+
+\item \textbf{Paso inductivo: $s\ge2$.} Las mitades tienen tamaños $\lceil s/2\rceil$ y $\lfloor s/2\rfloor$, ambos menores que $s$. Por la hipótesis inductiva, después de las llamadas recursivas tienen la forma
+\[
+P[l..m]=1^\alpha2^\beta,
+\qquad
+P[m+1..r]=1^\gamma2^\delta.
+\]
+El primer ciclo salta exactamente los unos iniciales de la izquierda; por tanto, $i$ señala su primer dos, o $m+1$ si $\beta=0$. El segundo ciclo salta exactamente los doses finales de la derecha; por tanto, $j$ señala su último uno, o $m$ si $\gamma=0$.
+
+Si $\beta=0$, la concatenación es $1^{\alpha+\gamma}2^\delta$; si $\gamma=0$, es $1^\alpha2^{\beta+\delta}$. En ambos casos está ordenada y la condición de la línea 11 impide la inversión.
+
+Si $\beta>0$ y $\gamma>0$, el segmento $P[i..j]$ es exactamente $2^\beta1^\gamma$. La inversión coloca en cada posición $i+t$ el elemento que estaba en $j-t$, para $0\le t\le j-i$; así, transforma ese segmento en $1^\gamma2^\beta$. El resultado completo es
+\[
+P[l..r]=1^{\alpha+\gamma}2^{\beta+\delta},
+\]
+que está ordenado. La inversión es una permutación de las posiciones de $[i,j]$ y deja las demás intactas; por ello, conserva todos los elementos.
+\end{enumerate}
+
+Por inducción, la llamada inicial ordena todos los panqueques de menor a mayor, conservándolos.
+
+\textbf{Tiempo de ejecución.} Sea $T(s)$ el tiempo máximo para un segmento de tamaño $s$. Los ciclos recorren, entre ambos, a lo sumo $s$ posiciones; emitir un par y ejecutar una inversión cuestan tiempo constante. Por ello, existe una constante $c>0$ que acota la combinación por $cs$ y el caso base por $c$:
+\[
+T(s)\le
+\begin{cases}
+c, & s\le1,\\
+T(\lceil s/2\rceil)+T(\lfloor s/2\rfloor)+cs, & s\ge2.
+\end{cases}
+\]
+
+Resolvemos por árbol de recurrencia, tomando $\log=\log_2$. Tras $k$ divisiones, cada segmento tiene tamaño a lo sumo $\lceil n/2^k\rceil$; esta cota resulta de redondear hacia arriba en cada división por dos. Para $L=\lceil\log_2 n\rceil$, tenemos $2^L\ge n$, de modo que todos los segmentos a profundidad $L$ tienen tamaño a lo sumo uno.
+
+En cada nivel, los segmentos son disjuntos y sus tamaños suman a lo sumo $n$; por ello, el costo de combinación del nivel es a lo sumo $cn$. Hay a lo sumo $L$ niveles con combinaciones y $n$ hojas, cada una de costo a lo sumo $c$. Así,
+\[
+T(n)\le cnL+cn=cn(L+1).
+\]
+Para $n\ge2$, $\log_2 n\ge1$, de modo que
+\[
+L+1\le\log_2 n+2\le3\log_2 n,
+\qquad
+T(n)\le3cn\log_2 n.
+\]
+Por definición de cota asintótica, $T(n)\in\Oh{n\log n}$.
+
+\textbf{Consumo de energía.} Sea $E(s)$ la energía máxima para un segmento de tamaño $s$. Cada combinación realiza a lo sumo una inversión dentro de $[l,r]$; como $i\ge l$ y $j\le r$, su energía satisface
+\[
+j-i\le r-l,
+\qquad r-l=s-1.
+\]
+Si no se invierte, la energía es cero. Por tanto,
+\[
+E(s)\le
+\begin{cases}
+0, & s\le1,\\
+E(\lceil s/2\rceil)+E(\lfloor s/2\rfloor)+(s-1), & s\ge2.
+\end{cases}
+\]
+En cada nivel del mismo árbol, la suma de las energías de combinación está acotada por la suma de los tamaños de sus segmentos, que es a lo sumo $n$. Las hojas no consumen energía; por tanto,
+\[
+E(n)\le\sum_{k=0}^{L-1}n=nL.
+\]
+Para $n\ge2$, $L\le\log_2 n+1\le2\log_2 n$, y entonces
+\[
+E(n)\le2n\log_2 n.
+\]
+Por definición, $E(n)\in\Oh{n\log n}$.
+
+\textbf{Conclusión.} El algoritmo produce una secuencia válida de inversiones que ordena los panqueques de menor a mayor, con tiempo $\Oh{n\log n}$ y energía $\Oh{n\log n}$.
+\fin

@@ -24,7 +24,7 @@ Las respuestas están en [`resultados/`](resultados/), un PDF por agente. El nom
 | 10 | recurrencias | facil | codex | [gpt_6_astra](resultados/ejercicio10_recurrencias_gpt_6_astra.pdf) |  |
 | 11 | recurrencias | facil | practica | [gpt_6_astra](resultados/ejercicio11_recurrencias_gpt_6_astra.pdf) |  |
 | 12 | recurrencias | media | practica | [gpt_6_astra](resultados/ejercicio12_recurrencias_gpt_6_astra.pdf) |  |
-| 13 | ordenamiento | dificil | codex | ⏳ |  |
+| 13 | ordenamiento | dificil | codex | [gpt_6_astra](resultados/ejercicio13_ordenamiento_gpt_6_astra.pdf) |  |
 | 14 | ordenamiento | dificil | codex | ⏳ |  |
 | 15 | ordenamiento | facil | codex | [gpt_6_astra](resultados/ejercicio15_ordenamiento_gpt_6_astra.pdf) |  |
 | 16 | heaps | facil | practica | [gpt_6_astra](resultados/ejercicio16_heaps_gpt_6_astra.pdf) |  |
