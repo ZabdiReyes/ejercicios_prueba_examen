@@ -12,7 +12,7 @@ Las respuestas están en [`resultados/`](resultados/), un PDF por agente. El nom
 
 | Ej. | Tema | Dificultad | Resuelve | PDF | Revisión |
 |---|---|---|---|---|---|
-| 1 | notacion_asintotica | facil | codex | [gpt_6_astra](resultados/ejercicio01_notacion_asintotica_gpt_6_astra.pdf) |  |
+| 1 | notacion_asintotica | facil | codex | [claude_opus](resultados/ejercicio01_notacion_asintotica_claude_opus.pdf) · [gpt_6_astra](resultados/ejercicio01_notacion_asintotica_gpt_6_astra.pdf) |  |
 | 2 | notacion_asintotica | media | codex | [gpt_6_astra](resultados/ejercicio02_notacion_asintotica_gpt_6_astra.pdf) |  |
 | 3 | notacion_asintotica | facil | codex | [gpt_6_astra](resultados/ejercicio03_notacion_asintotica_gpt_6_astra.pdf) |  |
 | 4 | recurrencias | facil | practica | [gpt_6_astra](resultados/ejercicio04_recurrencias_gpt_6_astra.pdf) |  |

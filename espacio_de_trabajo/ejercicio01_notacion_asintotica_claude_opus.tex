@@ -1,0 +1,35 @@
+% CERT rel=Omega f=log2(n)/n g=1/n c=1 n0=2
+\ej{1}{$f(n)=\dfrac{\log n}{n}$, $g(n)=\dfrac1n$ (logaritmos en base 2).}
+
+\textbf{Respuesta: opción (ii).} $f\in\Om{g}$ con $c=1$ y $n_0=2$; $f\notin\Oh{g}$, por lo que $f\notin\Th{g}$.
+
+\begin{enumerate}
+\item \textbf{Reducción: comparar $\log n$ con $c$.} Para $n\ge1$: $g(n)=\frac1n>0$ y $\log n\ge0$, así que $f(n)\ge0$. Además $f(n)=\log n\cdot\frac1n=\log n\cdot g(n)$. Para $c>0$ y $n\ge1$, multiplicamos por $n>0$ (no cambia el sentido de la desigualdad):
+\[
+f(n)\le c\,g(n)\iff \frac{\log n}{n}\le\frac{c}{n}\iff \log n\le c,
+\]
+\[
+f(n)\ge c\,g(n)\iff \frac{\log n}{n}\ge\frac{c}{n}\iff \log n\ge c.
+\]
+
+\item \textbf{$\Omega$: sí se cumple.} Debemos encontrar $c>0$ y $n_0$ tales que $f(n)\ge c\,g(n)$ para todo $n\ge n_0$. Por el paso 1, basta que $\log n\ge c$ para todo $n\ge n_0$.
+
+Elegimos $c=1$. Como $\log$ es creciente y $\log 2=1$, para todo $n\ge2$ se cumple $\log n\ge1$. Por el paso 1, $f(n)\ge1\cdot g(n)$ para todo $n\ge2$.
+
+No sirve $n_0=1$: $f(1)=0$ y $g(1)=1$, así que $f(1)<g(1)$.
+
+Por tanto, $f\in\Om{g}$ con $c=1$ y $n_0=2$.
+
+\item \textbf{$O$: no se cumple.} Supongamos, por contradicción, que existen $c>0$ y $n_0$ tales que $f(n)\le c\,g(n)$ para todo $n\ge n_0$. Por el paso 1, esto da $\log n\le c$ para todo $n\ge\max\{n_0,1\}$.
+
+Buscamos un $n$ que viole esa desigualdad. Como $\log$ y $2^x$ son crecientes, $\log n>c\iff n>2^c$. Necesitamos a la vez $n\ge n_0$ y $n>2^c$; por ello tomamos un entero $n>\max\{n_0,2^c\}$ (por ejemplo, $n=\lfloor\max\{n_0,2^c\}\rfloor+1$).
+
+Ese $n$ cumple $n\ge n_0$ y $n>2^c>1$, así que la suposición da $\log n\le c$. Pero $n>2^c$ da $\log n>c$. Contradicción. Por tanto, $f\notin\Oh{g}$.
+
+\item \textbf{$\Theta$: no se cumple.} Por el Teorema 2.1, $f\in\Th{g}$ exige $f\in\Oh{g}$ y $f\in\Om{g}$. Como $f\notin\Oh{g}$, entonces $f\notin\Th{g}$.
+
+\item \textbf{Comprobación con el límite.} $\dfrac{f(n)}{g(n)}=\log n\to\infty$: $f$ crece más rápido que $g$, lo que confirma $f\in\Om{g}$ y $f\notin\Oh{g}$.
+\end{enumerate}
+
+Concluimos: \textbf{opción (ii)}, $\boxed{\dfrac{\log n}{n}\in\Om{\dfrac1n}\ \text{con } c=1,\ n_0=2}$, y $\dfrac{\log n}{n}\notin\Oh{\dfrac1n}$.
+\fin
