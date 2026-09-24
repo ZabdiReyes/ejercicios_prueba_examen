@@ -1,0 +1,156 @@
+%<ej01>
+\enunciado{1}{Cotas asintóticas}
+Para la siguiente pareja de funciones, indique cuál de las siguientes cotas asintóticas se cumple para $f(n)$: (i) $\Oh{g(n)}$; (ii) $\Om{g(n)}$; (iii) ambas (es decir, $\Th{g(n)}$).
+Si considera que $f(n)$ es $\Oh{g(n)}$, debe proporcionar constantes $c$ y $n_0$ tales que $f(n)\le c\cdot g(n)$ para todo $n\ge n_0$. De manera similar, si considera que $f(n)$ es $\Om{g(n)}$, debe proporcionar constantes $c$ y $n_0$ tales que $f(n)\ge c\cdot g(n)$ para todo $n\ge n_0$. Todos los logaritmos son en base 2.
+\[ f(n)=\frac{\log n}{n},\qquad g(n)=\frac{1}{n}. \]
+%</ej01>
+
+%<ej02>
+\enunciado{2}{Cotas asintóticas}
+Para la siguiente pareja de funciones, indique cuál de las siguientes cotas asintóticas se cumple para $f(n)$: (i) $\Oh{g(n)}$; (ii) $\Om{g(n)}$; (iii) ambas (es decir, $\Th{g(n)}$).
+Si considera que $f(n)$ es $\Oh{g(n)}$, debe proporcionar constantes $c$ y $n_0$ tales que $f(n)\le c\cdot g(n)$ para todo $n\ge n_0$. De manera similar, si considera que $f(n)$ es $\Om{g(n)}$, debe proporcionar constantes $c$ y $n_0$ tales que $f(n)\ge c\cdot g(n)$ para todo $n\ge n_0$. Todos los logaritmos son en base 2.
+\[ f(n)=\log n,\qquad g(n)=\log n+\frac{1}{n}. \]
+%</ej02>
+
+%<ej03>
+\enunciado{3}{Cotas asintóticas}
+Para la siguiente pareja de funciones, indique cuál de las siguientes cotas asintóticas se cumple para $f(n)$: (i) $\Oh{g(n)}$; (ii) $\Om{g(n)}$; (iii) ambas (es decir, $\Th{g(n)}$).
+Si considera que $f(n)$ es $\Oh{g(n)}$, debe proporcionar constantes $c$ y $n_0$ tales que $f(n)\le c\cdot g(n)$ para todo $n\ge n_0$. De manera similar, si considera que $f(n)$ es $\Om{g(n)}$, debe proporcionar constantes $c$ y $n_0$ tales que $f(n)\ge c\cdot g(n)$ para todo $n\ge n_0$. Todos los logaritmos son en base 2.
+\[ f(n)=2^n,\qquad g(n)=2^{2n}. \]
+%</ej03>
+
+%<ej04>
+\enunciado{4}{Búsqueda binaria [Inducción] --- método de sustitución}
+Los ejercicios marcados con [Inducción] requieren una demostración por inducción. Cuando sea conveniente, suponga que $n$ es una potencia de 2 y que $\log n=\log_2 n$.
+Considere
+\[ T(n)=T(n/2)+1,\qquad T(1)=1. \]
+Conjeture que $T(n)\in\Th{\log n}$ y demuéstrelo mediante sustitución e inducción.
+%</ej04>
+
+%<ej05>
+\enunciado{5}{Tres subproblemas --- método de sustitución}
+Cuando sea conveniente, suponga que $n$ es una potencia de 2 y que $\log n=\log_2 n$.
+Analice mediante sustitución
+\[ T(n)=3T(n/2)+n,\qquad T(1)=1. \]
+Proponga primero una cota asintótica y verifique formalmente que se cumple.
+%</ej05>
+
+%<ej06>
+\enunciado{6}{Reducción de uno en uno}
+Analice por iteración
+\[ T(n)=T(n-1)+1,\qquad T(1)=1. \]
+Obtenga tanto una fórmula exacta como su complejidad asintótica.
+%</ej06>
+
+%<ej07>
+\enunciado{7}{Método maestro}
+Utilizando el método maestro, resuelva la recurrencia
+\[ T(n)=2T\!\left(\frac{n}{4}\right)+1. \]
+%</ej07>
+
+%<ej08>
+\enunciado{8}{Método maestro}
+Utilizando el método maestro, resuelva la recurrencia
+\[ T(n)=2T\!\left(\frac{n}{4}\right)+\sqrt{n}. \]
+%</ej08>
+
+%<ej09>
+\enunciado{9}{Método maestro}
+Utilizando el método maestro, resuelva la recurrencia
+\[ T(n)=2T\!\left(\frac{n}{4}\right)+n. \]
+%</ej09>
+
+%<ej10>
+\enunciado{10}{Método maestro}
+Utilizando el método maestro, resuelva la recurrencia
+\[ T(n)=2T\!\left(\frac{n}{4}\right)+n^2. \]
+%</ej10>
+
+%<ej11>
+\enunciado{11}{Árbol con costo lineal --- método del árbol de recurrencia}
+Construya el árbol para
+\[ T(n)=2T(n/2)+n,\qquad T(1)=1. \]
+Para cada nivel, determine el número de nodos, el tamaño de cada subproblema, el costo total del nivel y la altura del árbol. Finalmente, calcule el costo total.
+%</ej11>
+
+%<ej12>
+\enunciado{12}{Comparación de niveles --- método del árbol de recurrencia}
+Considere
+\[ T(n)=2T(n/2)+n^2,\qquad T(1)=1. \]
+Construya su árbol de recurrencia y responda:
+\begin{itemize}
+\item ¿El costo aumenta o disminuye al avanzar por los niveles?
+\item ¿Qué nivel aporta la mayor parte del costo?
+\item ¿Cuál es la complejidad asintótica?
+\end{itemize}
+Compruebe después el resultado mediante sustitución.
+%</ej12>
+
+%<ej13>
+\enunciado{13}{Po voltea panqueques (tamaños 1 o 2)}
+Po, el pingüino, ha preparado una enorme pila de $n$ panqueques sobre un plato. Los panqueques están etiquetados del 1 al $n$, de arriba hacia abajo, y el panqueque $i$ tiene tamaño $P_i$, donde $P_i>0$ y un valor mayor de $P_i$ representa un panqueque de mayor tamaño. Barr, el oso, quiere que la torre tenga forma de pirámide; es decir, que los panqueques estén ordenados con el más grande en la parte inferior.
+Con sus pinzas, Po puede invertir el orden de los panqueques desde la posición $i$ (contando desde arriba) hasta la posición $j$ (también contando desde arriba), para cualesquiera $1\le i\le j\le n$. Por ejemplo, si la secuencia inicial de tamaños es $[1,1,5,3,3]$, al utilizar las pinzas sobre las posiciones 2 a 5 se obtiene $[1,3,3,5,1]$, ya que la subsecuencia $[1,5,3,3]$ se invierte para obtener $[3,3,5,1]$. Esta operación le cuesta a Po $j-i$ unidades de energía.
+Po quiere una secuencia de pares $(i,j)$ tal que, al invertir los panqueques siguiendo dicha secuencia, estos queden ordenados y las inversiones utilicen poca energía. Los algoritmos reciben como entrada un arreglo con los tamaños $\{P_1,\dots,P_n\}$ y deben ordenar los panqueques, suponiendo que una operación de inversión (\emph{flip}) toma tiempo constante; otras operaciones, como leer el arreglo, también toman tiempo constante. El tiempo de ejecución se calcula de la manera usual, asignando $O(1)$ a cada inversión. La energía del algoritmo es la suma de las energías de todas las inversiones que realiza.
+
+\textbf{(13)} Suponga que todos los panqueques tienen tamaño 1 o 2. Diseñe un algoritmo con tiempo de ejecución $O(n\log n)$ que ordene los panqueques utilizando $O(n\log n)$ unidades de energía. Analice el tiempo de ejecución y el consumo de energía de su algoritmo, y demuestre su correctitud. \textbf{Pista:} utilice \emph{MergeSort}.
+%</ej13>
+
+%<ej14>
+\enunciado{14}{Po voltea panqueques (tamaños arbitrarios)}
+Po, el pingüino, ha preparado una enorme pila de $n$ panqueques sobre un plato. Los panqueques están etiquetados del 1 al $n$, de arriba hacia abajo, y el panqueque $i$ tiene tamaño $P_i$, donde $P_i>0$ y un valor mayor de $P_i$ representa un panqueque de mayor tamaño. Barr, el oso, quiere que la torre tenga forma de pirámide; es decir, que los panqueques estén ordenados con el más grande en la parte inferior.
+Con sus pinzas, Po puede invertir el orden de los panqueques desde la posición $i$ (contando desde arriba) hasta la posición $j$ (también contando desde arriba), para cualesquiera $1\le i\le j\le n$. Por ejemplo, si la secuencia inicial de tamaños es $[1,1,5,3,3]$, al utilizar las pinzas sobre las posiciones 2 a 5 se obtiene $[1,3,3,5,1]$, ya que la subsecuencia $[1,5,3,3]$ se invierte para obtener $[3,3,5,1]$. Esta operación le cuesta a Po $j-i$ unidades de energía.
+Los algoritmos reciben como entrada un arreglo con los tamaños $\{P_1,\dots,P_n\}$ y deben ordenar los panqueques, suponiendo que una inversión (\emph{flip}) toma tiempo constante; otras operaciones, como leer el arreglo, también toman tiempo constante. El tiempo se calcula de la manera usual, asignando $O(1)$ a cada inversión. La energía del algoritmo es la suma de las energías de todas sus inversiones.
+El inciso anterior (13) pedía, para panqueques de tamaño 1 o 2 únicamente, un algoritmo basado en \emph{MergeSort} con tiempo $O(n\log n)$ y energía $O(n\log n)$.
+
+\textbf{(14)} Suponga ahora que los panqueques pueden tener tamaños positivos arbitrarios. Diseñe un algoritmo que se ejecute en tiempo esperado $O(n\log^2 n)$ y que ordene los panqueques utilizando una cantidad esperada de energía $O(n\log^2 n)$. Analice el tiempo de ejecución y el consumo de energía de su algoritmo, y demuestre su correctitud. \textbf{Pista:} utilice el inciso anterior para implementar \emph{QuickSort}. Incluso si no resolvió el inciso anterior, puede suponer que dicho algoritmo existe y utilizarlo como una caja negra sin justificación.
+%</ej14>
+
+%<ej15>
+\enunciado{15}{Elección de algoritmo de ordenamiento}
+Indica qué algoritmo de ordenamiento utilizarías y por qué. Puede haber más de una respuesta correcta.
+Estás escribiendo código para que se ejecute en el próximo vehículo explorador de Marte y clasifique los datos recopilados cada noche. (Piensa en cómo realizar la clasificación con memoria y capacidad de cómputo limitadas.)
+%</ej15>
+
+%<ej16>
+\enunciado{16}{Reconocimiento de montículos}
+Determine si cada arreglo representa un max-heap, un min-heap o ninguno:
+\begin{itemize}
+\item[a)] $[20,15,18,8,10,5,17]$
+\item[b)] $[2,4,3,9,7,8,6]$
+\item[c)] $[15,10,20,8,9,17,25]$
+\end{itemize}
+Para cada respuesta, verifique la propiedad entre cada nodo y sus hijos.
+%</ej16>
+
+%<ej17>
+\enunciado{17}{Aplicación de MIN-HEAPIFY}
+Dado
+\[ [2,9,4,12,11,7,6,15,14], \]
+aplique \texttt{MIN-HEAPIFY} desde la posición 2. Muestre todas las comparaciones y los intercambios realizados.
+%</ej17>
+
+%<ej18>
+\enunciado{18}{Construcción de un max-heap}
+Convierta el arreglo
+\[ [4,10,3,5,1,8,7,9,2,6] \]
+en un max-heap usando el algoritmo de construcción de abajo hacia arriba. Comience en $\lfloor n/2\rfloor$ y muestre el arreglo después de cada llamada a \texttt{MAX-HEAPIFY}.
+%</ej18>
+
+%<ej19>
+\enunciado{19}{Complejidad de construcción [Inducción]}
+Los ejercicios marcados con [Inducción] requieren una demostración por inducción.
+Una estimación sencilla puede sugerir que construir un heap cuesta $O(n\log n)$, porque se llama a HEAPIFY $O(n)$ veces y cada llamada cuesta $O(\log n)$. Explique por qué esta cota no es ajustada y demuestre que la construcción de abajo hacia arriba cuesta $O(n)$. Puede utilizar
+\[ \sum_{h=0}^{\infty}\frac{h}{2^h}=2. \]
+Justifique también por qué la construcción pertenece a $\Om{n}$.
+%</ej19>
+
+%<ej20>
+\enunciado{20}{Corrección de MAX-HEAPIFY [Inducción]}
+Demuestre que \texttt{MAX-HEAPIFY}$(A,i)$ restaura correctamente la propiedad de max-heap en el subárbol con raíz $i$, bajo la precondición de que los subárboles izquierdo y derecho de $i$ ya son max-heaps.
+Organice la demostración como una inducción sobre la altura $h$ del subárbol:
+\begin{itemize}
+\item \textbf{Caso base:} $h=0$.
+\item \textbf{Hipótesis inductiva:} el algoritmo funciona para subárboles de altura menor que $h$.
+\item \textbf{Paso inductivo:} analice qué sucede si la raíz ya es el mayor elemento y qué sucede si debe intercambiarse con uno de sus hijos.
+\end{itemize}
+%</ej20>

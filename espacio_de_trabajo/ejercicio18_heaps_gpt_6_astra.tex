@@ -1,0 +1,58 @@
+% CERT rel=traza op=build-max-heap A=[4,10,3,5,1,8,7,9,2,6] final=[10,9,8,5,6,3,7,4,2,1] pasos=[[4,10,3,5,6,8,7,9,2,1],[4,10,3,9,6,8,7,5,2,1],[4,10,8,9,6,3,7,5,2,1],[4,10,8,9,6,3,7,5,2,1],[10,9,8,5,6,3,7,4,2,1]]
+\ej{18}{Construcción de un max-heap.}
+
+Usamos índices desde $1$: los hijos de $i$ están en $2i$ y $2i+1$, si existen. Como $n=10$, las posiciones $6,\dots,10$ son hojas; aplicamos \texttt{MAX-HEAPIFY} desde $\lfloor 10/2\rfloor=5$ hasta $1$.
+
+\begin{enumerate}
+\item \texttt{MAX-HEAPIFY}$(A,5)$. El nodo $A[5]=1$ tiene únicamente el hijo $A[10]=6$. Como $6>1$, intercambiamos $A[5]\leftrightarrow A[10]$: $1\leftrightarrow6$.
+\[
+A=[4,10,3,5,6,8,7,9,2,1].
+\]
+La posición $10$ es hoja; este es el arreglo tras la llamada.
+
+\item \texttt{MAX-HEAPIFY}$(A,4)$. Comparamos $A[4]=5$, $A[8]=9$ y $A[9]=2$. El mayor es $9$; intercambiamos $A[4]\leftrightarrow A[8]$: $5\leftrightarrow9$.
+\[
+A=[4,10,3,9,6,8,7,5,2,1].
+\]
+La posición $8$ es hoja; este es el arreglo tras la llamada.
+
+\item \texttt{MAX-HEAPIFY}$(A,3)$. Comparamos $A[3]=3$, $A[6]=8$ y $A[7]=7$. El mayor es $8$; intercambiamos $A[3]\leftrightarrow A[6]$: $3\leftrightarrow8$.
+\[
+A=[4,10,8,9,6,3,7,5,2,1].
+\]
+La posición $6$ es hoja; este es el arreglo tras la llamada.
+
+\item \texttt{MAX-HEAPIFY}$(A,2)$. Comparamos $A[2]=10$, $A[4]=9$ y $A[5]=6$. Como $10\ge9$ y $10\ge6$, no hay intercambio. Tras la llamada:
+\[
+A=[4,10,8,9,6,3,7,5,2,1].
+\]
+
+\item \texttt{MAX-HEAPIFY}$(A,1)$. Comparamos $A[1]=4$, $A[2]=10$ y $A[3]=8$. El mayor es $10$; intercambiamos $A[1]\leftrightarrow A[2]$: $4\leftrightarrow10$.
+\[
+A=[10,4,8,9,6,3,7,5,2,1].
+\]
+Continuamos en $i=2$: entre $A[2]=4$, $A[4]=9$ y $A[5]=6$, el mayor es $9$; intercambiamos $A[2]\leftrightarrow A[4]$: $4\leftrightarrow9$.
+\[
+A=[10,9,8,4,6,3,7,5,2,1].
+\]
+Continuamos en $i=4$: entre $A[4]=4$, $A[8]=5$ y $A[9]=2$, el mayor es $5$; intercambiamos $A[4]\leftrightarrow A[8]$: $4\leftrightarrow5$.
+\[
+A=[10,9,8,5,6,3,7,4,2,1].
+\]
+La posición $8$ es hoja; este es el arreglo tras la llamada.
+\end{enumerate}
+
+Verificamos cada nodo interno con sus hijos:
+\[
+\begin{array}{c|l}
+i & \text{Desigualdades padre-hijo}\\ \hline
+1 & 10\ge9,\quad 10\ge8\\
+2 & 9\ge5,\quad 9\ge6\\
+3 & 8\ge3,\quad 8\ge7\\
+4 & 5\ge4,\quad 5\ge2\\
+5 & 6\ge1
+\end{array}
+\]
+
+Por tanto, el max-heap obtenido es $\boxed{[10,9,8,5,6,3,7,4,2,1]}$. La construcción de abajo hacia arriba tiene complejidad $\Th{n}$.
+\fin

@@ -1,0 +1,30 @@
+% CERT rel=rec a=1 b=2 f=1 T1=1 cerrada=log2(n)+1
+\ej{4}{Búsqueda binaria: sustitución e inducción.}
+
+Consideramos $n=2^k$, con $k\in\N\cup\{0\}$, para que las divisiones entre $2$ alcancen el caso base $T(1)=1$.
+
+Conjeturamos $T(n)\in\Th{\log n}$. Para demostrarlo por sustitución, probaremos por inducción la fórmula más precisa $T(n)=\log_2 n+1$.
+
+\begin{enumerate}
+\item \textbf{Caso base ($k=0$).} Como $n=1$, se cumple $T(1)=1=\log_2 1+1$.
+
+\item \textbf{Hipótesis inductiva.} Supongamos que $T(2^k)=k+1$ para algún entero $k\ge0$.
+
+\item \textbf{Paso inductivo.} Aplicando la recurrencia y sustituyendo la hipótesis inductiva:
+\[
+T(2^{k+1})=T(2^{k+1}/2)+1
+=T(2^k)+1=(k+1)+1
+=\log_2(2^{k+1})+1.
+\]
+Por inducción, $T(n)=\log_2 n+1$ para toda potencia de $2$ con $n\ge1$.
+\end{enumerate}
+
+Para concluir $T(n)\in\Th{\log n}$, debemos encontrar $c_1,c_2>0$ y $n_0\in\N$ tales que $0\le c_1\log_2 n\le T(n)\le c_2\log_2 n$ para todo $n\ge n_0$ del dominio.
+
+Para $n\ge2$, tenemos $\log_2 n\ge1$; por ello,
+\[
+0\le\log_2 n\le\log_2 n+1=T(n)
+\le\log_2 n+\log_2 n=2\log_2 n.
+\]
+Podemos tomar $c_1=1$, $c_2=2$ y $n_0=2$. Por tanto, $\boxed{T(n)\in\Th{\log n}}$.
+\fin

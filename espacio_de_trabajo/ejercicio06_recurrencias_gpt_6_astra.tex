@@ -1,0 +1,36 @@
+% CERT rel=rec dec=1 f=1 T1=1 cerrada=n
+% CERT rel=Theta f=n g=n c1=1 c2=1 n0=1
+\ej{6}{Reducción de uno en uno por iteración.}
+
+Buscamos una fórmula exacta para $T(n)$ y su complejidad asintótica.
+
+\begin{enumerate}
+\item Partimos de $T(n)=T(n-1)+1$, con $T(1)=1$. Sustituyendo sucesivamente, mientras el argumento sea mayor que $1$:
+\[
+\begin{aligned}
+T(n)&=T(n-1)+1\\
+&=T(n-2)+1+1=T(n-2)+2\\
+&=T(n-3)+1+2=T(n-3)+3.
+\end{aligned}
+\]
+Cada expansión reduce el argumento en $1$ y suma $1$; por tanto, tras $k$ expansiones:
+\[
+T(n)=T(n-k)+k,\qquad 0\le k\le n-1.
+\]
+
+\item Para alcanzar el caso base necesitamos $n-k=1$, de donde $k=n-1$. Sustituyendo:
+\[
+T(n)=T(1)+(n-1)=1+n-1=\boxed{n}.
+\]
+
+\item Verificamos: para $n=1$, la fórmula da $T(1)=1$; para $n\ge2$, da $T(n-1)+1=(n-1)+1=n=T(n)$.
+
+\item Para demostrar $T(n)\in\Th{n}$, buscamos $c_1,c_2>0$ y $n_0\in\N$ tales que $0\le c_1n\le T(n)\le c_2n$ para todo $n\ge n_0$. Como $T(n)=n$, para $n\ge1$:
+\[
+0\le 1\cdot n\le T(n)=n\le 1\cdot n.
+\]
+Podemos tomar $c_1=1$, $c_2=1$ y $n_0=1$.
+\end{enumerate}
+
+Por tanto, la fórmula exacta es $\boxed{T(n)=n}$ y su complejidad es $\boxed{\Th{n}}$.
+\fin

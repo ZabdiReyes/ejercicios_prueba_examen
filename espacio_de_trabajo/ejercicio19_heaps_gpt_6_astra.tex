@@ -1,0 +1,49 @@
+\ej{19}{Complejidad de construcción de un heap por inducción.}
+
+Sea $T(n)$ el costo de \texttt{BUILD-HEAP} de abajo hacia arriba, con índices desde $1$. Demostraremos que $T(n)\in\Th{n}$.
+
+\begin{enumerate}
+\item \textbf{Por qué $\Oh{n\log n}$ no es ajustada.}
+El algoritmo llama a \texttt{HEAPIFY} para $i=\lfloor n/2\rfloor,\ldots,1$. Una llamada sobre un nodo de altura $h$ cuesta a lo sumo $Ch$, para alguna constante $C>0$: recorre como máximo $h$ niveles y realiza trabajo constante por nivel. Como los nodos procesados son internos, $h\ge1$.
+
+La estimación $\Oh{n\log n}$ asigna a todas las llamadas el costo de la raíz. Esto sobreestima el costo total: muchos nodos tienen poca altura y pocos tienen altura grande.
+
+\item \textbf{Número de nodos de cada altura, por inducción.}
+Probamos que el descendiente situado $h$ niveles debajo de $i$, siguiendo siempre hijos izquierdos, tiene índice $2^hi$, cuando existe.
+\begin{itemize}
+\item Para $h=0$, el índice es $i=2^0i$.
+\item Si a profundidad $h$ el índice es $2^hi$, su hijo izquierdo tiene índice $2(2^hi)=2^{h+1}i$.
+\end{itemize}
+Por inducción, la fórmula vale para todo $h\ge0$.
+
+Ese descendiente es el primero de su nivel dentro del subárbol. Como el heap ocupa consecutivamente las posiciones $1,\ldots,n$, el nodo $i$ tiene altura al menos $h$ si y solo si $2^hi\le n$, es decir, $i\le\lfloor n/2^h\rfloor$.
+
+Si $N_h$ cuenta los nodos de altura exactamente $h$, estos también tienen altura al menos $h$; por tanto,
+\[
+N_h\le\left\lfloor\frac{n}{2^h}\right\rfloor\le\frac{n}{2^h}.
+\]
+
+\item \textbf{Cota superior.}
+Debemos encontrar $c>0$ y $n_0\in\N$ tales que, para todo $n\ge n_0$, $0\le T(n)\le cn$.
+
+Sea $H$ la altura del heap. Agrupamos las llamadas por altura y acotamos el control del algoritmo por $Dn$, para alguna constante $D>0$:
+\[
+0\le T(n)
+\le Dn+C\sum_{h=1}^{H}hN_h
+\le Dn+Cn\sum_{h=1}^{H}\frac{h}{2^h}
+\le Dn+Cn\sum_{h=0}^{\infty}\frac{h}{2^h}
+=(D+2C)n.
+\]
+La última desigualdad vale porque los términos añadidos son no negativos. Por tanto, podemos tomar $c=D+2C$ y $n_0=2$, obteniendo $T(n)\in\Oh{n}$.
+
+\item \textbf{Cota inferior.}
+El algoritmo procesa los $\lfloor n/2\rfloor$ nodos internos y realiza al menos una operación por nodo. Para $n\ge2$,
+\[
+T(n)\ge\left\lfloor\frac n2\right\rfloor
+\ge\frac{n-1}{2}\ge\frac n4.
+\]
+Así, $0\le \frac14n\le T(n)$ para todo $n\ge2$; podemos tomar $c=\frac14$ y $n_0=2$, por lo que $T(n)\in\Om{n}$.
+\end{enumerate}
+
+Con ambas cotas, $\boxed{T(n)\in\Th{n}}$, con $c_1=\frac14$, $c_2=D+2C$ y $n_0=2$. Por ello, $\Oh{n\log n}$ es una cota válida, pero no ajustada.
+\fin

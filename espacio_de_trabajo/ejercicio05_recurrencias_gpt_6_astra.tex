@@ -1,0 +1,44 @@
+% CERT rel=rec a=3 b=2 f=n T1=1 cerrada=3*n**log2(3)-2*n
+% CERT rel=Theta f=3*n**log2(3)-2*n g=n**log2(3) c1=1 c2=3 n0=1
+\ej{5}{Tres subproblemas: método de sustitución.}
+
+Consideramos $n=2^k$, con $k\in\N\cup\{0\}$, para alcanzar el caso base. Sea $p=\log_2 3$; entonces $2^p=3$.
+
+\begin{enumerate}
+\item \textbf{Cota propuesta.} Como $3(n/2)^p=n^p$, proponemos $T(n)\in\Th{n^p}$.
+
+\item \textbf{Refuerzo para la sustitución.} Suponer solamente $T(n/2)\le C(n/2)^p$ produce $T(n)\le Cn^p+n$, lo cual no cierra la inducción.
+
+Para absorber el término $+n$, buscamos una expresión $Cn^p-dn$. Al sustituir:
+\[
+3\left[C(n/2)^p-d(n/2)\right]+n
+=Cn^p+\left(1-\frac{3d}{2}\right)n.
+\]
+Para conservar el término $-dn$, necesitamos $1-\frac{3d}{2}=-d$, de donde $d=2$. Además, el caso base exige $C-2=1$, así que $C=3$.
+
+\item \textbf{Verificación por inducción.} Demostramos la fórmula reforzada $T(n)=3n^p-2n$.
+
+\textit{Base:} para $n=1$, $3(1)^p-2(1)=1=T(1)$.
+
+\textit{Paso inductivo:} para $n=2^k$ con $k\ge1$, suponemos $T(n/2)=3(n/2)^p-2(n/2)$. Sustituyendo:
+\[
+\begin{aligned}
+T(n)
+&=3T(n/2)+n\\
+&=3\left[3(n/2)^p-2(n/2)\right]+n\\
+&=9\frac{n^p}{2^p}-3n+n\\
+&=3n^p-2n,
+\end{aligned}
+\]
+donde usamos $2^p=3$. Por inducción, la fórmula se cumple para toda potencia de $2$.
+
+\item \textbf{Ambas cotas.} Como $p>1$ y $n\ge1$, tenemos $n\le n^p$; por tanto,
+\[
+0\le n^p=3n^p-2n^p
+\le 3n^p-2n=T(n)\le3n^p.
+\]
+Podemos tomar $c_1=1$, $c_2=3$ y $n_0=1$, en el dominio considerado.
+\end{enumerate}
+
+Concluimos que $\boxed{T(n)\in\Th{n^{\log_2 3}}}$.
+\fin

@@ -1,0 +1,54 @@
+\ej{16}{Reconocimiento de montículos.}
+Con índices desde $1$, los hijos de $i$ están en $2i$ y $2i+1$. En un max-heap, cada padre es mayor o igual que sus hijos; en un min-heap, es menor o igual. Como $n=7$, verificamos los nodos internos $i=1,2,3$; los demás son hojas.
+
+\begin{enumerate}
+\item[a)] $A=[20,15,18,8,10,5,17]$.
+
+Verificamos la propiedad de max-heap nodo por nodo:
+\[
+\begin{array}{c|c|c}
+i & A[i]\ge A[2i] & A[i]\ge A[2i+1]\\ \hline
+1 & 20\ge15 & 20\ge18\\
+2 & 15\ge8  & 15\ge10\\
+3 & 18\ge5  & 18\ge17
+\end{array}
+\]
+Todas las desigualdades se cumplen; por tanto, es un \textbf{max-heap}.
+
+No es min-heap: el primer padre que falla es $i=1$, con hijo en $2$, pues $A[1]=20>A[2]=15$, lo que viola $A[1]\le A[2]$.
+
+\item[b)] $A=[2,4,3,9,7,8,6]$.
+
+Verificamos la propiedad de min-heap nodo por nodo:
+\[
+\begin{array}{c|c|c}
+i & A[i]\le A[2i] & A[i]\le A[2i+1]\\ \hline
+1 & 2\le4 & 2\le3\\
+2 & 4\le9 & 4\le7\\
+3 & 3\le8 & 3\le6
+\end{array}
+\]
+Todas las desigualdades se cumplen; por tanto, es un \textbf{min-heap}.
+
+No es max-heap: el primer padre que falla es $i=1$, con hijo en $2$, pues $A[1]=2<A[2]=4$, lo que viola $A[1]\ge A[2]$.
+
+\item[c)] $A=[15,10,20,8,9,17,25]$.
+
+Verificamos ambas propiedades nodo por nodo:
+\[
+\begin{array}{c|c|c}
+i & \text{Max-heap} & \text{Min-heap}\\ \hline
+1 & 15\ge10,\quad 15\not\ge20 & 15\not\le10,\quad 15\le20\\
+2 & 10\ge8,\quad 10\ge9 & 10\not\le8,\quad 10\not\le9\\
+3 & 20\ge17,\quad 20\not\ge25 & 20\not\le17,\quad 20\le25
+\end{array}
+\]
+Para max-heap, el primer padre que falla es $i=1$, con hijo en $3$: $A[1]=15<A[3]=20$, lo que viola $A[1]\ge A[3]$.
+
+Para min-heap, el primer padre que falla también es $i=1$, con hijo en $2$: $A[1]=15>A[2]=10$, lo que viola $A[1]\le A[2]$.
+
+Por tanto, no es max-heap ni min-heap.
+\end{enumerate}
+
+Concluimos: \textbf{a) max-heap; b) min-heap; c) ninguno.}
+\fin

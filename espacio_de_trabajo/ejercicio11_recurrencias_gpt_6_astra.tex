@@ -1,0 +1,53 @@
+% CERT rel=rec a=2 b=2 f=n T1=1 cerrada=n*log2(n)+n
+\ej{11}{Árbol de recurrencia para $T(n)=2T(n/2)+n$, con $T(1)=1$.}
+
+Suponemos $n=2^h$, con $h\in\N\cup\{0\}$, para que las divisiones lleguen exactamente al caso base.
+
+\begin{enumerate}
+\item \textbf{Construcción del árbol.} Cada nodo de tamaño $m>1$ tiene dos hijos de tamaño $m/2$ y costo propio $m$. Los tamaños de los primeros niveles son:
+\begin{verbatim}
+                 [n]
+              /       \
+          [n/2]       [n/2]
+          /   \       /   \
+      [n/4] [n/4] [n/4] [n/4]
+        ...   ...   ...   ...
+\end{verbatim}
+
+\item \textbf{Costo por nivel.} La raíz está en el nivel $0$. En cada nivel se duplica el número de nodos y se divide entre $2$ el tamaño:
+\[
+\begin{array}{c|c|c|c|c}
+\text{Nivel}&\text{Nodos}&\text{Tamaño}&\text{Costo por nodo}&\text{Costo total}\\ \hline
+0&1&n&n&n\\
+1&2&n/2&n/2&n\\
+2&4&n/4&n/4&n\\
+i<h&2^i&n/2^i&n/2^i&2^i(n/2^i)=n\\
+h&2^h&1&T(1)=1&2^h=n
+\end{array}
+\]
+El costo total se mantiene en $n$ por nivel; todos los niveles contribuyen por igual.
+
+\item \textbf{Altura y hojas.} Las hojas tienen tamaño $1$, por lo que
+\[
+\frac{n}{2^h}=1\;\Rightarrow\;2^h=n\;\Rightarrow\;h=\log_2 n.
+\]
+Así, la altura es $\log_2 n$, hay $h+1=\log_2 n+1$ niveles y $2^h=n$ hojas.
+
+\item \textbf{Costo total.} Sumamos los $h$ niveles internos y el costo de las hojas:
+\[
+T(n)=\sum_{i=0}^{h-1}2^i\frac{n}{2^i}+2^hT(1)
+=\sum_{i=0}^{h-1}n+n
+=hn+n
+=n\log_2 n+n.
+\]
+Para $n=1$, la suma interna es vacía y la fórmula da $T(1)=1$, como se requiere.
+
+Para $n\ge2$, se cumple $\log_2 n\ge1$, de modo que $n\le n\log_2 n$ y
+\[
+0\le n\log_2 n\le T(n)=n\log_2 n+n\le2n\log_2 n.
+\]
+Por tanto, podemos tomar $c_1=1$, $c_2=2$ y $n_0=2$.
+\end{enumerate}
+
+Concluimos que $\boxed{T(n)=n\log_2 n+n\in\Th{n\log_2 n}}$, para $n$ potencia de $2$.
+\fin

@@ -1,0 +1,28 @@
+\ej{20}{Corrección de MAX-HEAPIFY por inducción}
+
+Demostraremos por inducción sobre la altura $h$ que \texttt{MAX-HEAPIFY(A,i)} convierte el subárbol de raíz $i$ en un max-heap, suponiendo que sus subárboles izquierdo y derecho ya son max-heaps.
+
+Usamos índices desde $1$: los hijos de $i$ son $2i$ y $2i+1$, cuando existen. La propiedad de max-heap exige que cada padre sea mayor o igual que sus hijos.
+
+\begin{enumerate}
+\item \textbf{Caso base: $h=0$.} El nodo $i$ es una hoja; por tanto, no tiene hijos y satisface la propiedad de max-heap. El algoritmo no intercambia elementos y termina correctamente.
+
+\item \textbf{Hipótesis inductiva.} Supongamos que el algoritmo funciona para todo subárbol de altura menor que $h$ cuyos subárboles hijos ya sean max-heaps.
+
+\item \textbf{Paso inductivo: $h>0$.} El algoritmo compara $A[i]$ con los valores de sus hijos existentes. Hay dos casos:
+
+\textbf{Caso 1: la raíz ya es mayor o igual que sus hijos.} Entonces $A[i]\ge A[2i]$ y $A[i]\ge A[2i+1]$, para los hijos existentes. Estas relaciones, junto con la precondición en ambos subárboles, garantizan que todo el subárbol de raíz $i$ es un max-heap. El algoritmo termina correctamente.
+
+\textbf{Caso 2: algún hijo es mayor que la raíz.} Sea $j$ el índice del hijo con mayor valor y sean $x=A[i]$ y $M=A[j]$ antes del intercambio. El algoritmo intercambia $A[i]\leftrightarrow A[j]$: $x\leftrightarrow M$.
+
+Como cada subárbol hijo es un max-heap, su raíz es mayor o igual que todos sus descendientes, por aplicación sucesiva de las desigualdades padre-hijo. Además, $M>x$ y $M$ es mayor o igual que el valor del otro hijo, si existe. Por tanto, $M$ es mayor o igual que todos los valores del subárbol original.
+
+Tras el intercambio, $A[i]=M$ y $A[j]=x$. Solo puede haberse alterado la propiedad de max-heap entre $j$ y sus hijos: los subárboles hijos de $j$ permanecen intactos, al igual que el otro subárbol de $i$.
+
+El algoritmo llama a \texttt{MAX-HEAPIFY(A,j)}. Como $j$ es hijo de $i$, su subárbol tiene altura menor que $h$; por la hipótesis inductiva, la llamada lo convierte en un max-heap.
+
+La llamada únicamente intercambia valores dentro de ese subárbol; todos siguen siendo menores o iguales que $M$. Así, $A[i]=M$ sigue siendo mayor o igual que sus hijos. Como ambos subárboles hijos son ahora max-heaps, todo el subárbol de raíz $i$ también lo es.
+\end{enumerate}
+
+Cada llamada recursiva desciende a un subárbol de menor altura, por lo que el algoritmo termina. Por inducción, \texttt{MAX-HEAPIFY(A,i)} restaura correctamente la propiedad de max-heap bajo la precondición indicada.
+\fin

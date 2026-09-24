@@ -1,0 +1,34 @@
+% CERT rel=traza op=min-heapify A=[2,9,4,12,11,7,6,15,14] i=2 final=[2,9,4,12,11,7,6,15,14] pasos=[]
+\ej{17}{Aplicación de MIN-HEAPIFY desde la posición 2.}
+
+Usamos índices desde \(1\). Debemos comparar \(A[2]\) con sus hijos y, si corresponde, intercambiarlo con el menor.
+
+\begin{enumerate}
+\item Identificamos el nodo y sus hijos: \(A[2]=9\), \(\mathrm{izq}(2)=4\), \(A[4]=12\), \(\mathrm{der}(2)=5\), \(A[5]=11\).
+
+\item Comparamos el hijo izquierdo con el nodo: \(12<9\) es falso; el menor sigue siendo \(A[2]=9\).
+
+\item Comparamos el hijo derecho con el menor actual: \(11<9\) es falso; el menor sigue siendo \(A[2]=9\).
+
+\item Como \(9\le12\) y \(9\le11\), no se realiza ningún intercambio y el procedimiento termina.
+\end{enumerate}
+
+El arreglo final es
+\[
+[2,9,4,12,11,7,6,15,14].
+\]
+
+Verificamos la propiedad de min-heap en todos los nodos internos:
+\[
+\begin{array}{c|l}
+i & \text{Comparaciones padre-hijo}\\ \hline
+1 & 2\le9,\quad 2\le4\\
+2 & 9\le12,\quad 9\le11\\
+3 & 4\le7,\quad 4\le6\\
+4 & 12\le15,\quad 12\le14
+\end{array}
+\]
+
+La complejidad general de \texttt{MIN-HEAPIFY} es \(\Oh{\log n}\), pues desciende a lo sumo la altura del árbol; esta ejecución cuesta \(\Th{1}\), al terminar tras dos comparaciones de valores.
+
+Por tanto, el arreglo ya es un min-heap y permanece sin cambios: se realizan \(0\) intercambios. \fin

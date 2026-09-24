@@ -1,0 +1,72 @@
+% CERT rel=rec a=2 b=2 f=n**2 T1=1 cerrada=2*n**2-n
+% CERT rel=Theta f=2*n**2-n g=n**2 c1=1 c2=2 n0=1
+\ej{12}{Comparación de niveles por árbol de recurrencia y comprobación por sustitución.}
+
+Consideramos $n=2^h$, con $h\in\N\cup\{0\}$, para que las divisiones lleguen al caso base $T(1)=1$.
+
+\begin{enumerate}
+\item \textbf{Árbol de recurrencia.} Cada nodo de tamaño $m>1$ tiene costo propio $m^2$ y genera dos hijos de tamaño $m/2$. Los primeros niveles, indicando el tamaño dentro de cada nodo, son:
+\[
+\begin{array}{ccccccc}
+&&&[n]&&&\\
+&&\swarrow&&\searrow&&\\
+&[n/2]&&&&[n/2]&\\
+\swarrow&&\searrow&&\swarrow&&\searrow\\
+{}[n/4]&&[n/4]&&[n/4]&&[n/4]
+\end{array}
+\]
+
+En el nivel $i$ hay $2^i$ nodos de tamaño $n/2^i$; por tanto, su costo total es
+\[
+C_i=2^i\left(\frac{n}{2^i}\right)^2
+=\frac{2^in^2}{2^{2i}}
+=\frac{n^2}{2^i}.
+\]
+Así, los primeros costos por nivel son $n^2,n^2/2,n^2/4,\ldots$.
+
+La altura se obtiene al alcanzar tamaño $1$: $n/2^h=1\Rightarrow h=\log_2 n$. Hay $2^h=n$ hojas, cada una con costo $T(1)=1$.
+
+\item \textbf{Comparación de niveles.} Como $C_{i+1}=C_i/2$, el costo \textbf{disminuye a la mitad} al avanzar un nivel. Esta relación también incluye las hojas, pues $C_h=n^2/2^h=n$.
+
+Para $n>1$, la raíz es el nivel de mayor costo: aporta $n^2$. Sumando los niveles internos y las hojas:
+\[
+\begin{aligned}
+T(n)
+&=\sum_{i=0}^{h-1}\frac{n^2}{2^i}+n\\
+&=n^2\frac{1-(1/2)^h}{1-1/2}+n
+&&\text{(suma geométrica)}\\
+&=2n^2\left(1-\frac1n\right)+n
+&&\text{(pues $2^h=n$)}\\
+&=2n^2-2n+n=2n^2-n.
+\end{aligned}
+\]
+Los demás niveles aportan $(2n^2-n)-n^2=n^2-n<n^2$; por ello, \textbf{la raíz aporta más de la mitad del costo total}. Si $n=1$, la raíz es la única hoja y aporta todo el costo.
+
+\item \textbf{Comprobación por sustitución.} Verificamos por inducción sobre $h$ la fórmula $T(n)=2n^2-n$.
+
+\textit{Caso base:} para $n=1$, $2(1)^2-1=1=T(1)$.
+
+\textit{Paso inductivo:} para $n=2^h$ con $h\ge1$, suponemos
+$T(n/2)=2(n/2)^2-n/2$. Al sustituir en la recurrencia:
+\[
+\begin{aligned}
+T(n)
+&=2T(n/2)+n^2\\
+&=2\left[2\left(\frac n2\right)^2-\frac n2\right]+n^2\\
+&=2\left(\frac{n^2}{2}-\frac n2\right)+n^2\\
+&=n^2-n+n^2=2n^2-n.
+\end{aligned}
+\]
+La fórmula satisface tanto la recurrencia como el caso base.
+
+\item \textbf{Complejidad asintótica.} Buscamos $c_1,c_2>0$ y $n_0\in\N$ tales que $0\le c_1n^2\le T(n)\le c_2n^2$ para todo $n\ge n_0$ del dominio considerado.
+
+Para $n\ge1$, tenemos $n\le n^2$ y $n\ge0$; por tanto,
+\[
+0\le n^2=2n^2-n^2\le 2n^2-n=T(n)\le2n^2.
+\]
+Podemos tomar $c_1=1$, $c_2=2$ y $n_0=1$.
+\end{enumerate}
+
+En conclusión, el costo disminuye por niveles, domina la raíz y $\boxed{T(n)\in\Th{n^2}}$.
+\fin
