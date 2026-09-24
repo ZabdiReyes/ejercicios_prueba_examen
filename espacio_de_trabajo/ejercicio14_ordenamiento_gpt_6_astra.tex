@@ -1,0 +1,179 @@
+\ej{14}{Ordenamiento de panqueques arbitrarios mediante QuickSort e inversiones}
+
+\textbf{Idea.} Elegimos un pivote uniformemente al azar y usamos dos particiones binarias para formar los bloques
+\[
+[\,P_i<v\,]\ [\,P_i=v\,]\ [\,P_i>v\,].
+\]
+Ordenamos recursivamente el primero y el tercero. El bloque central contiene al pivote, por lo que ambas llamadas reciben menos elementos.
+
+Tomamos $\log=\log_2$. Usaremos la caja negra $\operatorname{Binario}(P,l,r,\lambda)$: ordena el segmento según etiquetas $\lambda(P_i)\in\{1,2\}$ mediante inversiones, con tiempo y energía $\Oh{m\log m}$ para $m\ge2$, donde $m=r-l+1$. Si $m\le1$, no realiza inversiones.
+
+Las etiquetas son \emph{virtuales}: cada consulta devuelve $\lambda(P_i)$ y cada inversión se ejecuta sobre los panqueques reales. Una inversión local de posiciones $u,\ldots,w$ corresponde a
+\[
+\operatorname{flip}(l+u-1,l+w-1).
+\]
+Su energía es $(l+w-1)-(l+u-1)=w-u$; por tanto, esta implementación conserva el costo de la caja negra.
+
+\textbf{Pseudocódigo.} Entrada: $P[1..n]$, con tamaños positivos. Salida: el mismo arreglo ordenado de menor a mayor. Los índices comienzan en $1$.
+
+\begin{enumerate}
+\item Ejecutar $\operatorname{Ordenar}(P,1,n)$.
+\end{enumerate}
+
+\noindent$\operatorname{Ordenar}(P,l,r)$:
+\begin{enumerate}
+\item Si $l\ge r$, regresar.
+\item Elegir $q$ uniformemente en $\{l,\ldots,r\}$ y guardar $v\gets P_q$.
+\item Recorrer $P[l..r]$ y calcular
+\[
+a\gets \#\{i:P_i<v\},\qquad e\gets \#\{i:P_i=v\}.
+\]
+\item Ejecutar $\operatorname{Binario}(P,l,r,\lambda)$, donde
+\[
+\lambda(x)=
+\begin{cases}
+1,&x<v,\\
+2,&x\ge v.
+\end{cases}
+\]
+\item Ejecutar $\operatorname{Binario}(P,l+a,r,\lambda)$, ahora con
+\[
+\lambda(x)=
+\begin{cases}
+1,&x=v,\\
+2,&x>v.
+\end{cases}
+\]
+Esta llamada solo recibe elementos mayores o iguales que $v$.
+\item Ejecutar $\operatorname{Ordenar}(P,l,l+a-1)$.
+\item Ejecutar $\operatorname{Ordenar}(P,l+a+e,r)$.
+\end{enumerate}
+
+\textbf{Correctitud.} Demostramos por inducción sobre $m$ que cada llamada ordena su segmento y conserva sus elementos.
+
+\begin{enumerate}
+\item \textbf{Base:} si $m\le1$, el segmento ya está ordenado y no se modifica.
+
+\item \textbf{Hipótesis:} toda llamada sobre menos de $m$ elementos ordena correctamente y conserva sus elementos.
+
+\item \textbf{Paso:} sea $m\ge2$. Por la garantía de la caja negra, el paso 4 coloca los $a$ elementos menores que $v$ en las primeras $a$ posiciones. El sufijo contiene únicamente elementos mayores o iguales que $v$.
+
+El paso 5 ordena las etiquetas de ese sufijo: sus primeros $e$ elementos son iguales que $v$ y los restantes son mayores. Por tanto, quedan exactamente los bloques
+\[
+\underbrace{P[l..l+a-1]}_{<v},\qquad
+\underbrace{P[l+a..l+a+e-1]}_{=v},\qquad
+\underbrace{P[l+a+e..r]}_{>v}.
+\]
+
+Como el pivote pertenece al segmento, $e\ge1$; así,
+\[
+0\le a\le m-1,\qquad 0\le m-a-e\le m-1.
+\]
+Por la hipótesis inductiva, las dos llamadas recursivas ordenan los bloques exteriores. El bloque central ya está ordenado porque todos sus elementos valen $v$. Las desigualdades entre bloques garantizan que su concatenación está ordenada.
+
+Finalmente, $\operatorname{flip}(i,j)$ mueve cada posición $i+t$ a $j-t$, para $0\le t\le j-i$, y deja fijas las posiciones exteriores. Esta correspondencia es biyectiva; por ello, cada inversión conserva todos los panqueques.
+\end{enumerate}
+
+La disminución estricta de los tamaños garantiza terminación, incluso si todos los tamaños son iguales.
+
+\textbf{Costo de una llamada.} Para $m\ge2$, elegir el pivote cuesta $\Oh{1}$ y contar los elementos cuesta $\Oh{m}$. La primera partición cuesta $\Oh{m\log m}$; la segunda procesa a lo sumo $m$ elementos y tiene la misma cota. Como $\log m\ge1$, existen constantes $c_T,c_E>0$ tales que los costos locales satisfacen
+\[
+C_T(P,v)\le c_Tm\log m,\qquad
+C_E(P,v)\le c_Em\log m.
+\]
+El conteo no consume energía porque no realiza inversiones.
+
+Si $P_{<}$ y $P_{>}$ denotan los bloques recursivos, las recurrencias, condicionadas al pivote elegido, son
+\[
+\begin{aligned}
+T(P)&=T(P_{<})+T(P_{>})+C_T(P,v),\\
+E(P)&=E(P_{<})+E(P_{>})+C_E(P,v).
+\end{aligned}
+\]
+Sus tamaños son $a$ y $m-a-e$; para $m\le1$, el tiempo es constante y la energía es cero.
+
+\textbf{Análisis esperado del árbol recursivo.} Justificaremos que la suma esperada de los tamaños de sus nodos internos pertenece a $\Oh{n\log n}$.
+
+Para analizar una llamada de tamaño $m\ge2$, ordenamos conceptualmente sus panqueques por tamaño y rompemos empates mediante su identidad original. Esto asigna rangos distintos $1,\ldots,m$ sin modificar el algoritmo. Como el pivote se elige uniformemente entre los panqueques, su rango $k$ es uniforme.
+
+Llamamos \emph{buena} a una elección cuyo rango satisface
+\[
+\left\lceil\frac m4\right\rceil
+\le k\le
+\left\lfloor\frac{3m}{4}\right\rfloor+1.
+\]
+Este intervalo está contenido en $\{1,\ldots,m\}$ para $m\ge2$. Su número de rangos es
+\[
+\left\lfloor\frac{3m}{4}\right\rfloor
+-\left\lceil\frac m4\right\rceil+2.
+\]
+Usando $\lfloor x\rfloor\ge x-1$ y $\lceil x\rceil\le x+1$, dicho número es al menos $m/2$; por tanto, la probabilidad condicional de una elección buena es al menos $1/2$.
+
+Hay a lo sumo $k-1$ elementos estrictamente menores y a lo sumo $m-k$ estrictamente mayores que el pivote. Para una elección buena,
+\[
+a\le k-1\le\frac{3m}{4},\qquad
+m-a-e\le m-k\le\frac{3m}{4}.
+\]
+Así, cualquier hijo tiene tamaño a lo sumo $3m/4$.
+
+Fijemos un panqueque $i$ y sea $D_i$ el número de llamadas de tamaño al menos $2$ que lo contienen. Para $n\ge2$, definimos
+\[
+K=\left\lceil\log_{4/3}n\right\rceil.
+\]
+Este valor basta porque, después de $K$ elecciones buenas en su trayectoria, el tamaño satisface
+\[
+m\le n(3/4)^K\le1.
+\]
+Las demás elecciones tampoco aumentan el tamaño.
+
+Dividimos esa trayectoria en etapas: cada etapa termina con una elección buena o cuando el panqueque deja de participar. Hay a lo sumo $K$ etapas. Si $W$ es la duración de una etapa, tener $W>t$ exige que sus primeras $t$ elecciones no sean buenas y que la trayectoria continúe. Como cada probabilidad condicional de fracaso es a lo sumo $1/2$,
+\[
+\Pr(W>t)\le 2^{-t}.
+\]
+Para una variable entera no negativa, su esperanza es la suma de sus probabilidades de cola; por ello,
+\[
+\mathbb E[W]=\sum_{t=0}^{\infty}\Pr(W>t),
+\qquad
+\mathbb E[W]\le\sum_{t=0}^{\infty}2^{-t},
+\qquad
+\sum_{t=0}^{\infty}2^{-t}=2.
+\]
+Sumando las etapas, sin requerir independencia, obtenemos $\mathbb E[D_i]\le2K$.
+
+Sea $m_u$ el tamaño del nodo interno $u$. Contar las parejas ``panqueque contenido en un nodo'' de ambas maneras da
+\[
+\sum_u m_u=\sum_{i=1}^{n}D_i.
+\]
+Por linealidad de la esperanza,
+\[
+\mathbb E\!\left[\sum_u m_u\right]
+=\sum_{i=1}^{n}\mathbb E[D_i],
+\qquad
+\mathbb E\!\left[\sum_u m_u\right]\le2nK.
+\]
+
+\textbf{Tiempo y energía totales.} Cada nodo interno elimina de futuras llamadas al menos un panqueque de su bloque central. Estos bloques son disjuntos, de modo que hay a lo sumo $n$ nodos internos y $2n+1$ llamadas en total. El costo de los casos base pertenece, por tanto, a $\Oh{n}$.
+
+Como $m_u\le n$, tenemos $\log m_u\le\log n$. Sumando los costos locales,
+\[
+T(P)\le c_0n+c_T\log n\sum_u m_u,\qquad
+E(P)\le c_E\log n\sum_u m_u.
+\]
+Al tomar esperanzas,
+\[
+\mathbb E[T(P)]\le c_0n+2c_TnK\log n,\qquad
+\mathbb E[E(P)]\le2c_EnK\log n.
+\]
+Por cambio de base,
+\[
+\log_{4/3}n=\frac{\log_2n}{\log_2(4/3)},
+\]
+de modo que $K\in\Oh{\log n}$. Para $n\le1$, el tiempo es constante y la energía es cero.
+
+\textbf{Conclusión.} El algoritmo ordena correctamente los panqueques con el mayor abajo, admite tamaños repetidos y satisface
+\[
+\boxed{\mathbb E[T(P)]\in\Oh{n\log^2 n}
+\qquad\text{y}\qquad
+\mathbb E[E(P)]\in\Oh{n\log^2 n}.}
+\]
+\fin
