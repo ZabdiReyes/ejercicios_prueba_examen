@@ -1,0 +1,31 @@
+% CERT rel=Omega f=log2(n)/n g=1/n c=1 n0=2
+% CERT rel=notO f=log2(n)/n g=1/n w=max(n0,floor(2**c)+1)
+\ej{1}{Determine si $f(n)=\dfrac{\log_2 n}{n}$ pertenece a $\Oh{g(n)}$, a $\Om{g(n)}$ o a ambas, donde $g(n)=\dfrac1n$. Proporcione constantes para las cotas que se cumplan.}
+
+\begin{enumerate}
+\item \textbf{Cota inferior.} Por definición, debemos encontrar $c>0$ y $n_0\in\N$ tales que $0\le c\,g(n)\le f(n)$ para todo $n\ge n_0$.
+
+Para $n\ge2$, la monotonía de $\log_2$ da $\log_2 n\ge1$. Como $n>0$, dividimos entre $n$:
+\[
+0\le\frac1n\le\frac{\log_2 n}{n}.
+\]
+Por tanto, con $\boxed{c=1,\ n_0=2}$ se cumple la definición y $f\in\Om{g}$.
+
+\item \textbf{No hay cota superior.} Supongamos $f\in\Oh{g}$. Por definición, existen $c>0$ y $n_0\in\N$ tales que
+\[
+0\le\frac{\log_2 n}{n}\le c\frac1n
+\qquad\text{para todo }n\ge n_0.
+\]
+Para $n\ge1$, multiplicamos por $n>0$ y obtenemos $\log_2 n\le c$.
+
+Necesitamos un entero $n\ge n_0$ con $\log_2 n>c$; como $\log_2$ es estrictamente creciente, basta exigir $n>2^c$. Por ello tomamos
+\[
+n=\max\{n_0,\lfloor2^c\rfloor+1\}.
+\]
+Este entero cumple $n\ge n_0$ y $n\ge\lfloor2^c\rfloor+1>2^c$. Por monotonía del logaritmo y porque $\log_2(2^c)=c$, obtenemos $\log_2 n>c$, en contradicción con $\log_2 n\le c$. Así, $f\notin\Oh{g}$.
+
+\item \textbf{Clasificación.} Por el Teorema 2.1, $f\in\Th{g}$ equivale a tener simultáneamente $f\in\Oh{g}$ y $f\in\Om{g}$. Como la primera pertenencia es falsa, $f\notin\Th{g}$.
+\end{enumerate}
+
+Concluimos que corresponde la \textbf{opción (ii)}: $\boxed{f\in\Om{g}}$, con $c=1$ y $n_0=2$.
+\fin

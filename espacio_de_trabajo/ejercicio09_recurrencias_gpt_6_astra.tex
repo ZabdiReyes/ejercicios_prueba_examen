@@ -1,0 +1,39 @@
+% CERT rel=Omega f=n g=n c=1 n0=1
+\ej{9}{Método maestro para $T(n)=2T(n/4)+n$.}
+
+Suponemos $n=4^h$, con $h\in\N\cup\{0\}$, para que las divisiones lleguen exactamente al caso base, cuyo costo suponemos constante y positivo.
+
+\begin{enumerate}
+\item \textbf{Identificación.} En la forma $T(n)=aT(n/b)+f(n)$ tenemos
+\[
+a=2,\qquad b=4,\qquad f(n)=n.
+\]
+Como $4^{1/2}=2$, resulta $\log_4 2=1/2$; por tanto,
+\[
+n^{\log_b a}=n^{1/2}.
+\]
+
+\item \textbf{Caso del teorema.} El caso 3 del Teorema Maestro establece que, para $a\ge1$ y $b>1$, si existe $\varepsilon>0$ tal que
+\[
+f(n)\in\Om{n^{\log_b a+\varepsilon}},
+\]
+y existe una constante $0<k<1$ tal que $a f(n/b)\le k f(n)$ para todo $n$ suficientemente grande, entonces $T(n)\in\Th{f(n)}$.
+
+Aquí $a=2\ge1$ y $b=4>1$. Elegimos $\varepsilon=1/2>0$ para que el exponente coincida con el de $f(n)$:
+\[
+n^{\log_4 2+\varepsilon}=n^{1/2+1/2}=n.
+\]
+Como $f(n)=n$, se cumple $f(n)\ge 1\cdot n$ para todo $n\ge1$. Por definición de $\Omega$, la comparación requerida vale con $c=1$ y $n_0=1$.
+
+\item \textbf{Regularidad.} Sustituyendo $f(n)=n$:
+\[
+a f(n/b)=2f(n/4)=2\frac n4=\frac n2=\frac12 f(n).
+\]
+Por tanto, $a f(n/b)\le k f(n)$ con $k=1/2$, que satisface $0<k<1$, para todo $n\ge1$.
+\end{enumerate}
+
+Se cumplen las hipótesis del caso 3; concluimos que
+\[
+\boxed{T(n)\in\Th{n}}.
+\]
+\fin

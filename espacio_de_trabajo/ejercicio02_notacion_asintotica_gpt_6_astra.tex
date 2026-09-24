@@ -1,0 +1,31 @@
+% CERT rel=O f=log2(n) g=log2(n)+1/n c=1 n0=2
+% CERT rel=Omega f=log2(n) g=log2(n)+1/n c=1/2 n0=2
+% CERT rel=Theta f=log2(n) g=log2(n)+1/n c1=1/2 c2=1 n0=2
+\ej{2}{Determine las cotas asintóticas de $f(n)=\log_2 n$ respecto de $g(n)=\log_2 n+\frac1n$, proporcionando constantes explícitas.}
+
+Por definición, debemos encontrar $c>0$ y $n_0\in\N$ tales que, para todo $n\ge n_0$, se cumpla $0\le f(n)\le c\,g(n)$ para $O$, y $0\le c\,g(n)\le f(n)$ para $\Omega$.
+
+\begin{enumerate}
+\item \textbf{Cota superior.} Para $n\ge2$, $\log_2 n\ge1$ por la monotonía del logaritmo; como $\frac1n>0$, sumar este término da
+\[
+0\le\log_2 n\le\log_2 n+\frac1n.
+\]
+Por tanto, $f\in\Oh{g}$ con $c=1$ y $n_0=2$.
+
+\item \textbf{Cota inferior.} Necesitamos que el término $\frac1n$ esté acotado por $\log_2 n$. Para $n\ge2$,
+\[
+\frac1n\le\frac12\le1\le\log_2 n.
+\]
+Sumando $\log_2 n$ a ambos lados de $\frac1n\le\log_2 n$ y reuniendo los términos del lado derecho, obtenemos
+\[
+\log_2 n+\frac1n\le2\log_2 n.
+\]
+Como $g(n)>0$, dividir entre $2>0$ da
+\[
+0\le\frac12\left(\log_2 n+\frac1n\right)\le\log_2 n.
+\]
+Por tanto, $f\in\Om{g}$ con $c=\frac12$ y $n_0=2$.
+\end{enumerate}
+
+Las dos cotas dan $0\le\frac12g(n)\le f(n)\le g(n)$ para todo $n\ge2$. Por definición, $f\in\Th{g}$ con $c_1=\frac12$, $c_2=1$ y $n_0=2$. Concluimos que corresponde la \textbf{opción (iii): ambas}.
+\fin

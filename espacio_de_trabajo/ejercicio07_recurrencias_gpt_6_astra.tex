@@ -1,0 +1,38 @@
+% CERT rel=O f=1 g=n**0 c=1 n0=1
+\ej{7}{Método maestro para $T(n)=2T(n/4)+1$.}
+
+Suponemos $n=4^h$, con $h\in\N\cup\{0\}$, para que las divisiones lleguen exactamente a $1$. Como no se especifica el caso base, suponemos que $T(1)$ es una constante no negativa.
+
+\begin{enumerate}
+\item \textbf{Identificación.} La forma del Teorema Maestro es $T(n)=aT(n/b)+f(n)$. En esta recurrencia:
+\[
+a=2,\qquad b=4,\qquad f(n)=1.
+\]
+Se cumplen $a\ge1$, $b>1$ y $f(n)>0$. Como $4^{1/2}=2$, tenemos $\log_4 2=1/2$; por tanto,
+\[
+n^{\log_b a}=n^{\log_4 2}=n^{1/2}.
+\]
+
+\item \textbf{Caso aplicable.} El caso 1 establece que, si existe $\varepsilon>0$ tal que
+\[
+f(n)\in\Oh{n^{\log_b a-\varepsilon}},
+\]
+entonces $T(n)\in\Th{n^{\log_b a}}$.
+
+Elegimos $\varepsilon=1/2>0$ para que el exponente sea cero:
+\[
+n^{\log_b a-\varepsilon}=n^{1/2-1/2}=n^0=1.
+\]
+Para todo $n\ge1$ se cumple $0\le1\le1\cdot n^0$; así, con $c=1$ y $n_0=1$,
+\[
+f(n)\in\Oh{n^{\log_b a-\varepsilon}}.
+\]
+Quedan verificadas las hipótesis del caso 1.
+\end{enumerate}
+
+Por el caso 1 del Teorema Maestro, concluimos que
+\[
+\boxed{T(n)\in\Th{\sqrt n}},
+\]
+para $n$ potencia de $4$ y caso base constante no negativo.
+\fin

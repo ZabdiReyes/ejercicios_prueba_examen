@@ -1,0 +1,38 @@
+% CERT rel=O f=2**n g=2**(2*n) c=1 n0=1
+\ej{3}{Determine cuáles cotas se cumplen para $f(n)=2^n$ y $g(n)=2^{2n}$, con constantes explícitas. Todos los logaritmos son en base $2$.}
+
+\begin{enumerate}
+\item \textbf{Cota superior.} Por definición, debemos encontrar $c>0$ y $n_0\in\N$ tales que $0\le f(n)\le c\,g(n)$ para todo $n\ge n_0$.
+
+Para $n\ge1$, tenemos $n\le2n$; como $2^x$ es creciente:
+\[
+0\le2^n\le2^{2n}.
+\]
+Por tanto, tomando $\boxed{c=1,\ n_0=1}$, obtenemos $f\in\Oh{g}$.
+
+\item \textbf{No hay cota inferior.} Supongamos $f\in\Om{g}$. Por definición, existen $c>0$ y $n_0\in\N$ tales que
+\[
+0\le c\,2^{2n}\le2^n\qquad\text{para todo }n\ge n_0.
+\]
+Como $2^{2n}>0$, dividimos entre $2^{2n}$ y simplificamos usando $2^n/2^{2n}=2^{-n}$:
+\[
+c\le2^{-n}\qquad\text{para todo }n\ge n_0.
+\]
+
+Para contradecir esta desigualdad, necesitamos simultáneamente $n\ge n_0$ y $n>\log_2(1/c)$. Elegimos el entero
+\[
+n=\max\left\{n_0,\,1,\,\left\lfloor\log_2(1/c)\right\rfloor+1\right\}.
+\]
+El máximo garantiza $n\ge n_0$; además, $\lfloor t\rfloor+1>t$ garantiza $n>\log_2(1/c)$. Como $2^x$ es creciente y $c>0$:
+\[
+2^n>\frac1c
+\quad\Longrightarrow\quad
+2^{-n}<c,
+\]
+donde la última desigualdad resulta de tomar recíprocos de cantidades positivas. Esto contradice $c\le2^{-n}$. Por tanto, $f\notin\Om{g}$.
+
+\item \textbf{No hay cota $\Theta$.} Por el Teorema 2.1, $f\in\Th{g}$ equivale a $f\in\Oh{g}$ y $f\in\Om{g}$. Como la segunda pertenencia es falsa, $f\notin\Th{g}$.
+\end{enumerate}
+
+Concluimos que únicamente se cumple $\boxed{\text{opción (i): }f\in\Oh{g}}$, con $c=1$ y $n_0=1$.
+\fin

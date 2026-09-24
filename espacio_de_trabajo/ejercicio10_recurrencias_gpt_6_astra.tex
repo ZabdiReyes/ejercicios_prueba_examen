@@ -1,0 +1,41 @@
+% CERT rel=Omega f=n**2 g=n**2 c=1 n0=1
+\ej{10}{Método maestro para $T(n)=2T(n/4)+n^2$.}
+
+Suponemos $n=4^h$, con $h\in\N\cup\{0\}$, para que las divisiones sean exactas, y un costo base $T(1)>0$ constante.
+
+\begin{enumerate}
+\item \textbf{Parámetros.} Comparando con $T(n)=aT(n/b)+f(n)$, tenemos
+\[
+a=2,\qquad b=4,\qquad f(n)=n^2,\qquad
+n^{\log_b a}=n^{\log_4 2}=n^{1/2},
+\]
+pues $4^{1/2}=2$. Se cumplen $a\ge1$, $b>1$ y $f(n)\ge0$ para $n\ge1$.
+
+\item \textbf{Caso 3 del Teorema Maestro.} Si existe $\varepsilon>0$ tal que
+$f(n)\in\Om{n^{\log_b a+\varepsilon}}$ y existe $0<k<1$ tal que
+$a f(n/b)\le kf(n)$ para todo $n$ suficientemente grande, entonces
+$T(n)\in\Th{f(n)}$.
+
+Para comparar los exponentes, elegimos $\varepsilon=2-\frac12=\frac32>0$. Así,
+\[
+n^{\log_4 2+\varepsilon}
+=n^{1/2+3/2}
+=n^2=f(n).
+\]
+Por tanto, $f(n)\in\Om{n^{\log_4 2+\varepsilon}}$, con constante $c=1$ y umbral $n_0=1$.
+
+\item \textbf{Regularidad.} Sustituyendo $a=2$, $b=4$ y $f(n)=n^2$:
+\[
+a f(n/b)=2\left(\frac n4\right)^2
+=\frac{2n^2}{16}
+=\frac18 n^2
+=\frac18 f(n).
+\]
+Tomando $k=\frac18$, tenemos $0<k<1$ y $a f(n/b)\le kf(n)$ para todo $n\ge1$.
+\end{enumerate}
+
+Como se cumplen ambas hipótesis del caso 3, concluimos que
+\[
+\boxed{T(n)\in\Th{n^2}}.
+\]
+\fin
